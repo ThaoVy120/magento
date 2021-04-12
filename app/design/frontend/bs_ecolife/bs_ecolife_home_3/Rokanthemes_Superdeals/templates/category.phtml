@@ -1,0 +1,237 @@
+<?php 
+	use Magento\Framework\App\Action\Action;
+	$templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::DEFAULT_VIEW;
+	$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $StockState = $objectManager->get('\Magento\CatalogInventory\Api\StockStateInterface');
+    $StockState2 = $objectManager->get('\Magento\CatalogInventory\Api\StockConfigurationInterface');
+	$category_load = $block->getCategory();
+	$rows = 1;
+	$items = $block->getConfig('items');
+	$speed = $block->getConfig('speed');
+	$qty = $block->getConfig('qty');
+	$showCart = $block->getConfig('addtocart');
+	$showWishlist = $block->getConfig('wishlist');
+	$showCompare = $block->getConfig('compare');
+	$show_navigation = $block->getConfig('navigation');
+	$show_pagination = $block->getConfig('pagination');
+	$auto = $block->getConfig('auto');
+	if($category_load && strtotime($block->getConfig('end_date')) >= strtotime($block->getCurrentTime())){ 
+		$image = 'category_page_grid-1';
+?>
+<?php if($this->getConfig('title')){?>
+	<div class="rokan-product-heading rokan-onsale-heading">
+		<h2><?php echo $this->getConfig('title')?> </h2>
+		<p class="description">
+			<?php echo $this->getConfig('description')?>
+		</p>
+	</div>
+<?php }?>
+<div class="hot-deal-tab-slider hot-deal-tab-slider-customcss section-product">
+	
+	<div class="row">
+		<div class="hot-deal-slide">
+			<?php 
+				$newItems =  $block->getProducts();
+				$i=0;
+				foreach($newItems as $_item) { 
+					$productImage = $block->getImage($_item, $image);
+				?>
+				<?php if($i++%$rows==0) { ?> <div class="product_row"> <?php } ?>
+					<div class="item-product product-item">
+						<div class="item">
+							<div class="product-photo">
+								<a href="<?php /* @escapeNotVerified */ echo $_item->getProductUrl() ?>" class="product photo product-item-photo" tabindex="-1">
+									<?php $productImageThumb = $block->getImage($_item, 'category_page_grid-1');?>
+									<span class="image0 image-switch">
+										<?php echo $productImage->toHtml(); ?>
+									</span>
+									<span class="image1 image-switch">
+										<?php echo $productImageThumb->toHtml(); ?>
+									</span>
+								</a>
+								<?php if ($this->helper('Rokanthemes\QuickView\Helper\Data')->isEnable()){ ?>			
+									<div class="quickview-product">
+											<a href="javascript:void(0)" data-role="quickview-button" data-id="<?php echo $_item->getId(); ?>" data-href="<?php echo $block->getUrl('quickview/product/quickview/id/' . $_item->getId()) ?>" title="<?php echo $block->escapeHtml(__('Quick view')); ?>" class="ajax diamond tooltip-hover" data-placement="top" data-original-title="<?php echo ('Quick view') ?>"><span class="icon-eye"></span></a>
+									</div>
+								<?php } ?>	
+								
+								<div class="product-label">
+									<?php if ($_item->getFinalPrice() < $_item->getPrice() ): ?>
+										<span class="onsale">
+											<span><?php echo __('Sale') ?></span>
+										</span>
+									<?php endif; ?>
+								</div>
+							</div>
+						    <div class="product-info">
+								<div class="product-category">
+									<?php 
+									$objectManager = \Magento\Framework\App\ObjectManager::getInstance(); 
+									$resource = $objectManager->get('Magento\Framework\App\ResourceConnection');
+									$adapter  = $resource->getConnection();
+									$categories = $_item->getCategoryIds(); 
+									$count = false;
+									foreach($categories as $key=>$category){
+										$sql = 'SELECT parent_id FROM catalog_category_entity WHERE entity_id = "'.$category.'"';
+										$data = $adapter->fetchRow($sql);
+										if($data['parent_id']){
+											$cat = $objectManager->create('Magento\Catalog\Model\Category')->load($category); 
+											if($cat->getLevel() != 1){ ?>
+												<a href="<?php echo $cat->getUrl() ?>"><?php  echo $cat->getName(); ?></a>
+												<?php $count = true;
+											}
+											
+										}
+									?> 
+										<?php if($count){ break; }?>
+									<?php	} ?> 
+								</div>
+								<h3 class="product-name">
+		 							<a title="<?php echo $_item->getName(); ?>" href="<?php /* @escapeNotVerified */ echo $_item->getProductUrl() ?>" class="product-item-link">
+										<?php echo $_item->getName(); ?>
+									</a>
+								</h3>
+								<div class="product-rating">
+									<?php if ($templateType): ?>
+										<?php echo $block->getReviewsSummaryHtml($_item, $templateType,true); ?>
+									<?php endif; ?>
+								</div>
+								
+								<div class="info-price">
+									<?php /* @escapeNotVerified */ echo $this->helper('Rokanthemes\Themeoption\Helper\Data')->getPriceDisplayCustom($block->getProductPrice($_item)) ?>
+								</div>
+								<div class="actions-add-cart">
+									<div class="action-inner">
+									
+										<ul class="add-to-links">
+											<?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow()): ?>
+											<li>
+												<a href="#"
+												   class="action button towishlist"
+												   title="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"
+												   aria-label="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"
+												   data-post='<?php /* @escapeNotVerified */ echo $block->getAddToWishlistParams($_item); ?>'
+												   data-action="add-to-wishlist"
+												   role="button">
+													
+												</a>
+											</li>
+											<?php endif; ?>										
+											
+											<?php
+												$compareHelper = $this->helper('Magento\Catalog\Helper\Product\Compare'); 
+											?>
+											<li><a href="#"
+												   class="action button tocompare"
+												   title="<?php echo $block->escapeHtml(__('Add to Compare')); ?>"
+												   aria-label="<?php echo $block->escapeHtml(__('Add to Compare')); ?>"
+												   data-post='<?php /* @escapeNotVerified */ echo $compareHelper->getPostDataParams($_item); ?>'
+												   role="button">
+													
+												</a>
+											</li>	
+										</ul>
+									</div>	
+								</div>	
+								<div class="product-sold">
+									<?php 
+										$numbertotal = $StockState->getStockQty($_item->getId());
+										$sale_qty = $this->helper('Rokanthemes\RokanBase\Helper\Data')->getSalableQuantityDataBySku($_item->getSku());
+										$numbersold = $numbertotal - $sale_qty;
+										$calculator = (($numbertotal - $sale_qty) / $numbertotal) * 100;
+									?>
+									
+									<div class="count-sold-available">
+										<div class="count-available">
+										<?php echo __('Available:') ?>
+										<span>
+											<?php 
+												echo $sale_qty;
+											?>
+									   </span>
+										</div>
+										<div class="count-sold">
+										<?php echo __('Sold:') ?>
+										<span>
+											<?php 
+												echo $numbersold;
+											?>
+										</span>
+										</div>
+										
+									</div>
+									<div class="ruler-sold">
+										<div class="ruler-sold-count" style="width: <?php 
+											echo $calculator; ?>%;">
+										</div>
+									</div>
+									<div class="countdown_block">
+										<div class="title_countdown"><?php echo __('Hurry Up! Offer ends in:') ?></div>
+										<div class="super-deal-countdown" data-date="<?php echo $block->getConfig('end_date');?>"></div>
+									</div>
+								</div>
+							</div>
+						
+						</div>
+					</div>
+						<?php if($i%$rows==0 || $i == count($newItems)) { ?> </div> <?php }?>
+				<?php 
+				}
+				?>
+		</div>
+		
+	</div>
+</div>
+<script type="text/javascript">
+require(["jquery", 'mage/mage','rokanthemes/timecircles', "rokanthemes/owl"], function($){
+	'use strict';
+		$( document ).ready(function() {
+			$(".hot-deal-slide").owlCarousel({
+				lazyLoad:true,
+				items: 2,
+	         	itemsDesktop : [1199, 2],
+		        itemsDesktopSmall : [991,1],
+		        itemsTablet : [767, 1],
+		        itemsMobile : [575, 1],
+	        	navigation : true,
+	        	pagination: false,
+	         afterAction: function(el){
+		     this.$owlItems.removeClass('first-active')
+		     this.$owlItems .eq(this.currentItem).addClass('first-active')  
+		  }
+	    });
+
+			if($('.super-deal-countdown').length>0){
+				$(".super-deal-countdown").TimeCircles({
+					fg_width: 0.01,
+					bg_width: 1.2,
+					text_size: 0.07,
+					circle_bg_color: "#ffffff",
+					time: {
+						Days: {
+							show: true,
+							text: "Days",
+							color: "#f9bc02"
+						},
+						Hours: {
+							show: true,
+							text: "Hours",
+							color: "#f9bc02"
+						},
+						Minutes: {
+							show: true,
+							text: "Mins",
+							color: "#f9bc02"
+						},
+						Seconds: {
+							show: true,
+							text: "Secs",
+							color: "#f9bc02"
+						}
+					}
+				}); 
+			}
+		});
+    });
+</script>
+<?php } ?>

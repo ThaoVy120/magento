@@ -1,0 +1,27 @@
+/**
+ * custom theme 2020-12-29 09:55:40 */
+
+#newsletter_pop_up{
+width: 600px;height: 580px;background-color: #fff;background-repeat: no-repeat;}
+#newsletter_pop_up .col-img{ 
+	background-image: url(http://blueskytechco.net/ecolife241/pub/media/rokanthemes/newsletter/background/stores/2/bg-new-sletter-ecolife.jpg);background-repeat: no-repeat;}
+.blog-custom-wrapper{        
+	background-image: url(http://blueskytechco.net/ecolife241/pub/media/rokanthemes/blog/bannerbackground/default/bg_breadcrumb.jpg); padding: 27vh 0; color: #fff; margin-bottom: 100px; max-height: 600px; background-repeat: no-repeat; background-size: cover;}
+.contact-index-index .page-title-wrapper{       
+	}
+.cms-about-us .page-title-wrapper{       
+	} 
+.background-module-product{        
+	}
+@media screen and ( max-width: 991px ){ 
+	.contact-index-index .page-title-wrapper{ 
+		}
+	.blog-custom-wrapper{ 
+		padding: 10vh 0; margin-bottom: 50px;	}
+	.background-module-product{
+			}
+	.cms-about-us .page-title-wrapper{   
+			}
+}	
+.block-newsletter-form{       
+	}

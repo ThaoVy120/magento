@@ -1,0 +1,51 @@
+<div class="header-container layout3">
+	<div class="topbar">
+		<div class="container-max">
+			<div class="flex-layout">
+				<div class="topbar-left"><?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('topbar_left')->toHtml(); ?></div>
+				
+				<div class="topbar-right">
+					<?php echo $this->getChildHtml("top.links"); ?>
+				</div>
+				<div class="language-currency">
+						<div class="container-setting-language-currency">
+							<?php echo $this->getChildHtml("store_language"); ?>  
+							<?php echo $this->getChildHtml("currency"); ?>
+						</div>		
+					</div>
+			</div>
+		</div>
+	</div>
+	<div class="header">
+		<div class="container-max">
+			<div class="for-full-withmenu flex-layout">
+				<div class="col-logo">
+					<?php echo $this->getChildHtml("logo"); ?>	
+				</div>
+				<?php echo $this->getChildHtml("top.navigation.sections"); ?>	
+				<?php echo $this->getChildHtml("topSearch"); ?>	
+				<?php echo $this->getChildHtml("minicart");?>		
+			</div>
+		</div>
+	</div>
+	
+</div>
+<?php if($this->helper('Rokanthemes\Themeoption\Helper\Themeconfig')->isEnableStickyHeader()){ ?>
+<script type="text/javascript">
+    require(['jquery'],function($){
+        $(document).ready(function($){
+			$(window).scroll(function() {
+				var num = $('.header-container').outerHeight();
+				var screenWidth = $(window).width();
+				
+				if ($(this).scrollTop() > num && screenWidth >= 768 ){  
+					$(".header").addClass("sticky");
+				}
+				else{
+					$(".header").removeClass("sticky");
+				}
+			});
+		});
+    });
+</script>
+<?php } ?>

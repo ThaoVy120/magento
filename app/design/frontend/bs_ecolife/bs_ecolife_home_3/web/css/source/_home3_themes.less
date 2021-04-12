@@ -1,0 +1,144 @@
+.header-container {
+	.topbar{
+		background: @lightcolor;
+	    .topbar-left{
+	    	.static-nav{
+	    		color: @headingcolor;
+	    	}
+	    }
+	    .topbar-right{
+	    	.links{
+	    		li{
+	    			a{
+	    				color: @headingcolor;
+	    				&:hover {
+	    					color: @linkshover;
+	    				}
+	    			}
+	    			&:before {
+	    				border-right: 1px solid @headingcolor;
+		    		}
+	    		}
+	    		
+	    	} 
+	    }
+	    
+	    .container-setting-language-currency{
+	    	& > div:before {
+			    border-right: 1px solid @headingcolor;
+			}
+			.switcher-options{
+	    		.switcher-trigger{
+	    			color: @headingcolor;
+	    		}
+	    	}
+	    }
+	   
+	}
+	> .header{
+	    background: @headingcolor;
+	     @media (min-width: 992px){   
+		 	padding: 18px 0;    
+		 } 
+	    &.sticky{
+	    	background: @headingcolor;
+	    }
+	    .block-search{
+			.block-content{
+				.top-search{
+					color: @lightcolor;
+				}
+			}
+		}
+		.minicart-wrapper {
+			.cart-header {
+				color: @lightcolor;
+			}
+		}
+
+	}
+	@media (min-width: 992px){
+		.nav-sections-items{
+			.navigation ul{
+
+				.level0{
+					> .level-top{
+						color: @lightcolor;
+						
+					}
+					&:hover {
+						> .level-top:before {
+						    border-color: @lightcolor;
+						}
+					}
+				}
+			}
+		}
+	}
+	
+}
+
+.hot-deal{
+	.product-item {
+		.item{
+			
+			@media (min-width: 768px){
+				.product-photo{
+					float: left;
+				    width: 43%;
+				    max-width: 320px;
+				}
+				.product-info{
+					overflow: hidden;
+    				padding: 30px 15px 15px 15px;
+    				.product-category * {
+					    font-size: 13px;
+					}
+				}
+
+			}
+			@media (min-width: 992px) and  (max-width: 1199px){
+				.product-photo{
+				    width: 40%; 
+				}
+				
+			}
+		}
+	}
+}
+.block-widget-rokanthemes-brand{
+	margin-bottom: 60px;
+	@media (max-width: 767px){
+		margin-bottom: 30px;		
+	}	
+}
+.wrap-category {
+	margin-bottom: 0;
+	@media (max-width: 767px){
+		margin-bottom: 0;		
+	}	
+}
+@media (max-width: 991px) {
+	.nav-toggle::before {
+	    color: @lightcolor;
+	}
+}
+.bg_featured{
+	background-image: url(../images/bg_feature.jpg);
+	background-repeat: no-repeat;
+    background-position: center center;
+    padding: 60px 0;
+    margin-bottom: 60px;
+	@media (max-width: 767px){
+		margin-bottom: 30px;		
+	}
+	.section-product {
+		 margin-bottom: 0;
+		@media (max-width: 767px){
+			margin-bottom: 0;		
+		}
+	}
+	.product-item {
+		background:transparent;
+	}	
+}

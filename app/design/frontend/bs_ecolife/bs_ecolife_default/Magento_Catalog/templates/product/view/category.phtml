@@ -1,0 +1,36 @@
+<?php
+$_product = $block->getProduct();
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$categories = $_product->getCategoryIds();
+$resource = $objectManager->get('Magento\Framework\App\ResourceConnection');
+$adapter  = $resource->getConnection();
+?>
+<div class="categories-product">
+	<span class="categories-label"><?php /* @escapeNotVerified */ echo __('Categories');?> </span>
+	<div class="categories-info">
+		<?php
+		$i = 0;
+		$categories_next = false;
+		foreach($categories as $category){
+			$sql = 'SELECT parent_id FROM catalog_category_entity WHERE entity_id = "'.$category.'"';
+			$data = $adapter->fetchRow($sql);
+			if($data['parent_id']){
+				$cat = $objectManager->create('Magento\Catalog\Model\Category')->load($category); 
+				if($cat->getLevel() != 1){ ?>
+					<a href="<?php echo $cat->getUrl() ?>"><?php  echo $cat->getName(); ?></a>
+					<?php 
+					$i++;
+					$categories_next = true;
+				}
+				
+			}
+			
+		?> 
+			<?php if($i == 3){ break; $categories_next = false;}
+			if ($categories_next == true) { 
+				echo  ",";
+			};
+		}
+		?>
+	</div>
+</div>

@@ -1,0 +1,33 @@
+<div id="back-top" class="back-top-button"></div>
+<div class="footer-container">
+	<div class="container">
+		<div class="footer-static-container">
+			<div class="footer_introduce">
+				<div class="grid-layouts">
+					<?php echo $this->getChildHtml("footer_static"); ?>
+				</div>
+			</div>
+		</div>
+		<div class="footer-bottom">
+			<div class="row">
+				<div class="col-md-6 col-sm-7"> 
+					<div class="copyright">
+						<?php  echo $this->getLayout()->createBlock("Rokanthemes\Themeoption\Block\Customcss")->setTemplate("html/copyright.phtml")->toHtml() ?>
+					</div>
+				</div>
+				<div class="col-md-6 col-sm-5"> 
+					<div class="footer-payment">  
+						<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('footer_payment')->toHtml(); ?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	window.onload = function () { 
+		document.body.className += " preloaded";
+	}
+	
+</script>
+

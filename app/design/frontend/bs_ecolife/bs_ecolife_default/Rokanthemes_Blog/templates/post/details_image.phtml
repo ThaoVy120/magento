@@ -1,0 +1,20 @@
+<?php
+/**
+ * Copyright © 2015 RokanThemes.com. All rights reserved.
+
+ * @author RokanThemes Team <contact@rokanthemes.com>
+ */
+?>
+<?php
+/**
+ * Blog post view template
+ *
+ * @var $block \Rokanthemes\Blog\Block\Post\View
+ */
+?>
+<?php
+    $_post = $this->getPost();
+    $_postUrl = $_post->getPostUrl();
+    $_postNameStripped = $block->stripTags($_post->getTitle(), null, true);
+	$_postName = $block->escapeHtml($_post->getTitle(), null, true);
+?>

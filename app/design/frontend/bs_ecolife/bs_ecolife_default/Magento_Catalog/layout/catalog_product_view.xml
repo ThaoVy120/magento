@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+		<move element="page.main.title" destination="product.info.main" before="-"/>
+        <move element="product.info.review" destination="product.info.main" before="product.info.price"/>
+		<move element="product.info.main" destination="product-view-right"/> 
+		<move element="product.info.media" destination="product-view" before="-"/> 
+		<move element="product.info.overview" destination="product.info.price" before="product.info.stock.sku"/>
+		<move element="product.info.stock.sku" destination="product.info.main.attribute" before="-"/> 
+		<move element="product.info.brand" destination="product.info.main.attribute" after="product.info.category"/> 
+		<referenceContainer name="product.info.media" htmlClass="product media col-sm-6 col-xs-12" htmlTag="div" />
+		<referenceContainer name="content">
+			<container name="product-view" htmlTag="div" htmlClass="product-view row" before="-">
+				<container name="product-view-right" htmlTag="div" htmlClass="col-sm-6 col-xs-12" after="product-view-right"/>
+			</container>
+		</referenceContainer> 
+		<referenceContainer name="product.info.main">
+			<container name="product.info.main.attribute" htmlTag="div" htmlClass="product-info-attribute" after="-">
+				<block class="Magento\Catalog\Block\Product\View" name="product.info.category" template="Magento_Catalog::product/view/category.phtml"/>
+				<block class="Magento\Catalog\Block\Product\View" name="product.info.share" template="Magento_Catalog::product/view/share.phtml" after="-"/>
+			</container>
+		</referenceContainer> 
+    </body>
+</page>

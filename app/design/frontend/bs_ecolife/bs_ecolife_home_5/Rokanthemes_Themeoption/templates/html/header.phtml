@@ -1,0 +1,58 @@
+<div class="header-container layout2 layout-header-5">
+	<div class="topbar">
+		<div class="container">
+			<div class="flex-layout">
+				<div class="topbar-left"><?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('free_shipment')->toHtml(); ?></div>
+				<div class="topbar-right">
+					<?php echo $this->getChildHtml("header.link.wrapper"); ?>
+				</div>
+				<div class="language-currency">
+					<div class="container-setting-language-currency">
+						<?php echo $this->getChildHtml("store_language"); ?>  
+						<?php echo $this->getChildHtml("currency"); ?>    
+					</div>		
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="header">
+		<div class="header-top">
+			<div class="container"> 
+				<div class="flex-layout">
+					<?php echo $this->getChildHtml("topSearch"); ?>	   
+					<div class="col-logo">
+						<?php echo $this->getChildHtml("logo"); ?>	
+					</div>
+					<div class="topbar-right">
+						<?php echo $this->getChildHtml("top.links"); ?>  
+						<?php echo $this->getChildHtml("minicart");?>
+					</div>	
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="for-full-withmenu flex-layout">	
+				<?php echo $this->getChildHtml("top.navigation.sections"); ?>	
+			</div>
+		</div>
+	</div>
+</div>
+<?php if($this->helper('Rokanthemes\Themeoption\Helper\Themeconfig')->isEnableStickyHeader()){ ?>
+<script type="text/javascript">
+    require(['jquery'],function($){
+        $(document).ready(function($){
+			$(window).scroll(function() {
+				var num = $('.header-container').outerHeight();
+				var screenWidth = $(window).width();
+				
+				if ($(this).scrollTop() > num ){  
+					$(".header").addClass("sticky");
+				}
+				else{
+					$(".header").removeClass("sticky");
+				}
+			});
+		});
+    });
+</script>
+<?php } ?>

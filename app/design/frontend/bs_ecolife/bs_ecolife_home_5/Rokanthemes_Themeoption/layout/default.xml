@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+
+    <body>   
+		<referenceContainer name="page.wrapper">
+			<container name="header.link.wrapper" htmlTag="ul" htmlClass="header links">
+			</container>
+		</referenceContainer>
+		<referenceContainer name="header-wrapper">
+			<block class="Magento\Framework\View\Element\Template" name="rokanthemes.search" template="Magento_Search::form.mini.phtml" />
+		</referenceContainer> 
+		<move element="rokanthemes.search" destination="toki_header" /> 
+		<move element="my-account-link" destination="header.link.wrapper" />
+		<move element="register-link" destination="header.link.wrapper" />    
+		<move element="authorization-link" destination="header.link.wrapper" /> 
+		<move element="header.link.wrapper" destination="toki_header" />
+    </body>
+</page>
